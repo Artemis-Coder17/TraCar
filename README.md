@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚗 TraCar
 
-## Getting Started
+**Keep your car in check — track NCT, insurance, motor tax, service history and fuel all in one place.**
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📱 What is TraCar?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+TraCar is a lightweight, browser-based vehicle maintenance tracker designed to help you stay on top of everything related to your car. No sign-ups, no accounts, no cloud — just a fast, private tool that lives in your browser and works like a native app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🏠 Dashboard
+- Personalised greeting with your name and car nickname
+- Upload a photo of your car as the hero image
+- Compliance status dots showing expiry countdowns for NCT, Insurance and Motor Tax
+- Year-to-date spend tracker with fuel vs service cost breakdown
 
-## Learn More
+### 📋 Compliance Reminders
+- Add NCT, Insurance and Motor Tax expiry dates
+- Color-coded status: 🟢 Good, 🟡 Warning (≤30 days), 🔴 Urgent (≤7 days)
+- "Add to Calendar" button generates ICS files for Google/Apple Calendar
+- Expired reminders stay visible for 30 days then auto-disappear
 
-To learn more about Next.js, take a look at the following resources:
+### ⛽ Fuel Logging
+- Log fuel fills with date, litres, price per litre and total cost
+- See monthly spending trends with a Recharts bar chart
+- Export your fuel history as CSV for AI-powered insights
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🔧 Service History
+- Record services with date, mileage, description and cost
+- Track upcoming services by interval (time or mileage)
+- Activity feed showing all your past log entries
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### ⚙️ Vehicle Settings
+- Set your name, car nickname, registration, make, model, year, colour and fuel type
+- Upload or change your car photo
+- Tap the car name or registration to edit anytime
 
-## Deploy on Vercel
+### 🗑️ Data Management
+- All data stored locally in your browser via `localStorage`
+- "Clear All Data" with confirmation phrase to prevent accidents
+- No accounts, no servers, no tracking
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🎨 Design
+- Dark glassmorphism UI with animated ambient background blobs
+- Glass-liquid cards with specular highlight effects
+- Pulse animations for urgent compliance items
+- Bottom navigation bar with floating action button
+- Responsive design optimised for mobile (iPhone/Android)
+- PWA-ready: add to home screen for app-like experience
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📸 Screenshots
+
+| Dashboard | Compliance | Fuel Log |
+|-----------|------------|----------|
+| 🏠 Car photo, status dots, YTD spend | 📋 NCT, Insurance, Motor Tax reminders | ⛽ Fill logging with charts |
+
+| Service | Settings |
+|---------|----------|
+| 🔧 Service history and upcoming intervals | ⚙️ Vehicle details and data management |
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Framework | [Next.js 16](https://nextjs.org/) (App Router) |
+| UI | [React 19](https://react.dev/), [Tailwind CSS v4](https://tailwindcss.com/) |
+| Charts | [Recharts](https://recharts.org/) |
+| Toasts | [Sonner](https://sonner.emilkowal.ski/) |
+| Icons | Inline SVGs |
+| Storage | `localStorage` |
+
+
+## 📄 Data & Privacy
+
+Everything is saved **locally in your browser**. There are no servers, no analytics, no tracking. If you clear your browser data, your TraCar data goes with it. This is by design — your car data stays yours.
+
+## 📱 Install as a Web App
+
+TraCar works best when added to your home screen:
+
+1. Open TraCar in your browser
+2. Tap **Share** (iOS) or **⋮ Menu → Install** (Android/Chrome)
+3. Tap **"Add to Home Screen"**
+4. Launch from your home screen for a full-screen, app-like experience
+
+> 💡 Use the same browser each time to keep your data persistent.
+
+## 🙌 Credits
+
+Made with by [Artemis Coder](https://github.com/Artemis-Coder17)
