@@ -1,0 +1,27 @@
+{
+  "name": "TraCar",
+  "short_name": "TraCar",
+  "description": "Keep your car in check — track NCT, insurance, motor tax, service history and fuel.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050c18",
+  "theme_color": "#050c18",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

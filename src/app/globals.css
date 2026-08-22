@@ -1,26 +1,325 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #050c18;
+  --bg-grad-1: rgba(6, 182, 212, 0.25);
+  --bg-grad-2: rgba(16, 185, 129, 0.20);
+  --bg-grad-3: rgba(99, 102, 241, 0.18);
+  --bg-grad-4: rgba(251, 191, 36, 0.10);
+
+  --glass-fill: linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+  --glass-fill-strong: rgba(255, 255, 255, 0.12);
+  --glass-border-top: rgba(255, 255, 255, 0.50);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-blur: blur(32px) saturate(180%) contrast(110%);
+  --glass-shadow: 0 16px 48px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.3);
+
+  --text: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.55);
+  --text-tertiary: rgba(255, 255, 255, 0.35);
+
+  --emerald: #34d399;
+  --amber: #fbbf24;
+  --crimson: #f87171;
+  --cyan: #22d3ee;
+
+  --sp-xs: clamp(8px, 2vw, 12px);
+  --sp-sm: clamp(12px, 3vw, 16px);
+  --sp-md: clamp(18px, 4vw, 24px);
+  --sp-lg: clamp(24px, 6vw, 32px);
+
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+
+  --f-xs: clamp(0.72rem, 2.2vw, 0.82rem);
+  --f-sm: clamp(0.8rem, 2.5vw, 0.9rem);
+  --f-base: clamp(0.9rem, 3vw, 1rem);
+  --f-lg: clamp(1rem, 3.5vw, 1.15rem);
+  --f-xl: clamp(1.4rem, 5vw, 1.8rem);
+  --f-hero: clamp(2rem, 8vw, 2.8rem);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Custom glass class for Tailwind */
+.glass {
+  background: var(--glass-fill);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-top-color: var(--glass-border-top);
+  box-shadow:
+    var(--glass-shadow),
+    inset 0 1.5px 0 rgba(255,255,255,0.45),
+    inset 0 -1px 0 rgba(0,0,0,0.15),
+    inset 10px 10px 28px rgba(147,197,253,0.08),
+    inset -8px -8px 20px rgba(0,0,0,0.15);
 }
 
+/* Liquid glass — hero cards with specular highlight band */
+.glass-liquid {
+  position: relative;
+  overflow: hidden;
+  background: var(--glass-fill);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-top-color: var(--glass-border-top);
+  box-shadow:
+    var(--glass-shadow),
+    inset 0 1.5px 0 rgba(255,255,255,0.45),
+    inset 0 -1px 0 rgba(0,0,0,0.15),
+    inset 10px 10px 28px rgba(147,197,253,0.08),
+    inset -8px -8px 20px rgba(0,0,0,0.15);
+}
+
+.glass-liquid::after {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: -10%;
+  width: 150%;
+  height: 65%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 25% 10%,
+    rgba(255,255,255,0.55) 0%,
+    rgba(255,255,255,0.0) 60%
+  );
+  opacity: 0.28;
+  mix-blend-mode: screen;
+  transition: opacity 250ms ease-out, transform 250ms ease-out;
+  z-index: 1;
+}
+
+.glass-liquid:hover::after {
+  opacity: 0.38;
+  transform: translateY(-6px);
+}
+
+/* Glass sheet — for bottom-sheet modals */
+.glass-sheet {
+  background: linear-gradient(180deg, rgba(8,14,26,0.88), rgba(6,10,20,0.96));
+  backdrop-filter: blur(48px) saturate(200%);
+  -webkit-backdrop-filter: blur(48px) saturate(200%);
+  border-top: 1px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 -16px 60px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.22);
+}
+
+/* Custom glass-strong class */
+.glass-strong {
+  background: linear-gradient(180deg, rgba(8,14,26,0.75), rgba(5,9,18,0.88));
+  backdrop-filter: blur(48px) saturate(220%) contrast(105%);
+  -webkit-backdrop-filter: blur(48px) saturate(220%) contrast(105%);
+  border-top: 1px solid rgba(255,255,255,0.22);
+  box-shadow:
+    0 -4px 40px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.28);
+}
+
+/* Override default Tailwind styles to match original */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* Make sure the app layout works properly */
+html,
+body {
+  height: 100%;
+}
+
+/* Add hover effects to interactive elements */
+button:hover {
+  transition: all 0.2s ease;
+}
+
+/* Health card glow pulse animations */
+@keyframes pulse-warning {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(251,191,36,0.25), 0 16px 48px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.3), inset 0 1.5px 0 rgba(255,255,255,0.45), inset 10px 10px 28px rgba(147,197,253,0.08); }
+  50%       { box-shadow: 0 0 28px 8px rgba(251,191,36,0.18), 0 16px 48px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.3), inset 0 1.5px 0 rgba(255,255,255,0.45), inset 10px 10px 28px rgba(147,197,253,0.08); }
+}
+@keyframes pulse-urgent {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(248,113,113,0.40), 0 16px 48px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.3), inset 0 1.5px 0 rgba(255,255,255,0.45), inset 10px 10px 28px rgba(147,197,253,0.08); }
+  50%       { box-shadow: 0 0 32px 10px rgba(248,113,113,0.22), 0 16px 48px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.3), inset 0 1.5px 0 rgba(255,255,255,0.45), inset 10px 10px 28px rgba(147,197,253,0.08); }
+}
+
+.health-pulse-warning { animation: pulse-warning 2.5s ease-in-out infinite; }
+.health-pulse-urgent  { animation: pulse-urgent  1.4s ease-in-out infinite; }
+
+@keyframes car-pulse-urgent  { 0%,100% { opacity:1; } 50% { opacity:0.72; } }
+@keyframes car-pulse-warning { 0%,100% { opacity:1; } 50% { opacity:0.84; } }
+.car-pulse-urgent  { animation: car-pulse-urgent  1.4s ease-in-out infinite; }
+.car-pulse-warning { animation: car-pulse-warning 2.5s ease-in-out infinite; }
+
+@keyframes frame-glow-urgent {
+  0%,100% { box-shadow: 0 0 12px rgba(248,113,113,0.45), 0 0 28px rgba(248,113,113,0.22); }
+  50%      { box-shadow: 0 0 26px rgba(248,113,113,0.80), 0 0 54px rgba(248,113,113,0.40); }
+}
+@keyframes frame-glow-warning {
+  0%,100% { box-shadow: 0 0 12px rgba(251,191,36,0.35), 0 0 28px rgba(251,191,36,0.18); }
+  50%      { box-shadow: 0 0 24px rgba(251,191,36,0.65), 0 0 48px rgba(251,191,36,0.30); }
+}
+.frame-glow-urgent  { animation: frame-glow-urgent  1.4s ease-in-out infinite; }
+.frame-glow-warning { animation: frame-glow-warning 2.5s ease-in-out infinite; }
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pageIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Ambient background blobs ───────────────────────────────────────────────── */
+
+.ambient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform;
+  pointer-events: none;
+}
+
+.ambient-blob-cyan {
+  width: 75vw; height: 65vh;
+  background: radial-gradient(circle, rgba(6,182,212,0.22) 0%, transparent 70%);
+  top: -20%; left: -15%;
+  animation: blobDrift1 34s ease-in-out infinite;
+}
+
+.ambient-blob-emerald {
+  width: 65vw; height: 70vh;
+  background: radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%);
+  bottom: -18%; right: -12%;
+  animation: blobDrift2 28s ease-in-out infinite;
+}
+
+.ambient-blob-indigo {
+  width: 50vw; height: 55vh;
+  background: radial-gradient(circle, rgba(99,102,241,0.14) 0%, transparent 70%);
+  top: 15%; left: 30%;
+  animation: blobDrift3 38s ease-in-out infinite;
+}
+
+@keyframes blobDrift1 {
+  0%, 100% { transform: translate(0,    0  ); }
+  25%       { transform: translate(4vw,  7vh); }
+  50%       { transform: translate(2vw, 13vh); }
+  75%       { transform: translate(-3vw, 5vh); }
+}
+
+@keyframes blobDrift2 {
+  0%, 100% { transform: translate(0,     0   ); }
+  33%       { transform: translate(-5vw, -7vh ); }
+  66%       { transform: translate( 4vw, -4vh ); }
+}
+
+@keyframes blobDrift3 {
+  0%, 100% { transform: translate(0,    0   ); }
+  40%       { transform: translate(-4vw, 6vh ); }
+  70%       { transform: translate( 3vw, -5vh); }
+}
+
+.activity-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+    0 8px 28px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  transition: background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.activity-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.activity-card:active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Glass pill for metadata tags */
+.glass-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  white-space: nowrap;
+}
+
+
+/* Better form focus states */
+input:focus {
+  outline: none;
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
+}
+
+@media (max-width: 374px) {
+  .service-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Responsive design adjustments */
+@media (min-width: 430px) {
+  .container { padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* Bottom navigation specific styles */
+.bottom-nav {
+  height: 60px;
+}
+
+/* Add padding to content to avoid overlap with bottom nav */
+.content-with-bottom-nav {
+  padding-bottom: 60px;
+}
+
+/* Ensure floating action button doesn't overlap with nav bar */
+.fab-with-nav {
+  bottom: 24px;
 }
