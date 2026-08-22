@@ -89,4 +89,4 @@ TraCar works best when added to your home screen:
 
 ## 🙌 Credits
 
-Made with by [Artemis Coder](https://github.com/Artemis-Coder17)
+Made by [Artemis Coder](https://github.com/Artemis-Coder17)
