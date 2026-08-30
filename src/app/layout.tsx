@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import { SWRegister } from "./sw-register";
+import { AuthProvider } from "../components/AuthProvider";
+import { AuthGate } from "../components/AuthGate";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -86,32 +88,34 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 
         {/* Main content above backdrop */}
         <SWRegister />
-        <div style={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <svg width="0" height="0" style={{ position: 'absolute', pointerEvents: 'none' }} aria-hidden="true">
-            <defs>
-              <filter id="liquid-refract">
-                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="3" seed="4" result="noise"/>
-                <feGaussianBlur in="noise" stdDeviation="2" result="softNoise"/>
-                <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="10" xChannelSelector="R" yChannelSelector="G"/>
-              </filter>
-            </defs>
-          </svg>
-          {children}
-          <Toaster
-            position="top-center"
-            toastOptions={{
-              style: {
-                background: 'rgba(8,14,26,0.92)',
-                border: '1px solid rgba(255,255,255,0.12)',
-                backdropFilter: 'blur(20px)',
-                color: '#fff',
-                borderRadius: '12px',
-                fontSize: '13px',
-                fontWeight: 500,
-              },
-            }}
-          />
-        </div>
+        <AuthProvider>
+          <div style={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <svg width="0" height="0" style={{ position: 'absolute', pointerEvents: 'none' }} aria-hidden="true">
+              <defs>
+                <filter id="liquid-refract">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="3" seed="4" result="noise"/>
+                  <feGaussianBlur in="noise" stdDeviation="2" result="softNoise"/>
+                  <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="10" xChannelSelector="R" yChannelSelector="G"/>
+                </filter>
+              </defs>
+            </svg>
+            <AuthGate>{children}</AuthGate>
+            <Toaster
+              position="top-center"
+              toastOptions={{
+                style: {
+                  background: 'rgba(8,14,26,0.92)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  backdropFilter: 'blur(20px)',
+                  color: '#fff',
+                  borderRadius: '12px',
+                  fontSize: '13px',
+                  fontWeight: 500,
+                },
+              }}
+            />
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );
