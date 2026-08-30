@@ -17,6 +17,10 @@
 /.next/
 /out/
 
+# PWA generated files
+/public/workbox-*.js
+/public/workbox-*.js.map
+
 # production
 /build
 
