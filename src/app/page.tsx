@@ -7,6 +7,7 @@ import { useLogs } from '../hooks/useLogs';
 import { useVehicleSettings } from '../hooks/useVehicleSettings';
 import { BottomNav } from '../components/BottomNav';
 import { haptic } from '../lib/haptic';
+import { signOut } from '../lib/auth';
 
 const PHOTO_KEY = 'tracar_vehicle_photo';
 
@@ -85,9 +86,9 @@ const DOC_LEVEL_COLOR: Record<StatusLevel, string> = {
 // ─── Component ─────────────────────────────────────────────────────────────────
 
 export default function Home() {
-  const { reminders } = useComplianceReminders();
-  const { settings, updateSettings } = useVehicleSettings();
-  const { logs } = useLogs();
+  const { settings, vehicleId, updateSettings } = useVehicleSettings();
+  const { reminders } = useComplianceReminders(vehicleId);
+  const { logs } = useLogs(vehicleId);
 
   const currentYear = new Date().getFullYear().toString();
   const ytdFuelCost = logs.filter(l => l.type === 'fuel' && l.date?.startsWith(currentYear)).reduce((s, l) => s + (l.cost ?? 0), 0);
@@ -568,6 +569,14 @@ export default function Home() {
                   )}
                 </div>
               )}
+              {/* ── Sign Out ───────────────────────────────────────── */}
+              <button
+                onClick={() => signOut()}
+                className="w-full py-2.5 text-xs font-semibold rounded-lg transition-colors mt-2"
+                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)', color: '#a1a1aa' }}
+              >
+                Sign out
+              </button>
             </div>
           </div>
         </div>

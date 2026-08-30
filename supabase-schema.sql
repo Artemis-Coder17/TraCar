@@ -7,7 +7,6 @@ create table vehicles (
   user_id uuid references auth.users(id) on delete cascade not null,
   nickname text not null default 'MY CAR',
   owner_name text,
-  reg text,
   make text,
   model text,
   year text,
@@ -29,7 +28,6 @@ create table compliance_reminders (
   doc_type text not null check (doc_type in ('NCT', 'INSURANCE', 'MOTOR_TAX')),
   expiry_date date not null,
   provider_name text,
-  policy_number text,
   created_at timestamptz default now()
 );
 

@@ -138,19 +138,19 @@ function SegmentedTimelineBar({ startDate, expiryDate }: { startDate: Date; expi
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function RemindersPage() {
-  const { reminders, addReminder, updateReminder, deleteReminder } = useComplianceReminders();
-  const { logs } = useLogs();
-  const { settings } = useVehicleSettings();
+  const { settings, vehicleId } = useVehicleSettings();
+  const { reminders, addReminder, updateReminder, deleteReminder } = useComplianceReminders(vehicleId);
+  const { logs } = useLogs(vehicleId);
   const reg = settings.vehicleReg || 'Your Car';
 
   const [modalMode, setModalMode] = useState<'add' | 'edit' | null>(null);
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [formDocType, setFormDocType] = useState<ComplianceReminder['docType']>('NCT');
   const [formExpiry, setFormExpiry] = useState('');
   const [formProvider, setFormProvider] = useState('');
   const [formPolicy, setFormPolicy] = useState('');
   const [formError, setFormError] = useState('');
-  const [detailId, setDetailId] = useState<number | null>(null);
+  const [detailId, setDetailId] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
   const openAdd = () => {
@@ -188,7 +188,7 @@ export default function RemindersPage() {
     setModalMode(null);
   };
 
-  const handleDelete = (id: number) => { haptic(12); deleteReminder(id); setModalMode(null); toast.success('Reminder removed'); };
+  const handleDelete = (id: string) => { haptic(12); deleteReminder(id); setModalMode(null); toast.success('Reminder removed'); };
 
   // ── Service reminders ─────────────────────────────────────────────────────
   const latestFuelOdo = Math.max(
@@ -210,7 +210,7 @@ export default function RemindersPage() {
       return { log: l, nextDate, daysUntil, kmInterval, kmDone };
     })
     .filter(r => r.daysUntil >= -30 && r.daysUntil <= 365)
-    .sort((a, b) => b.log.id - a.log.id); // newest logged first for dedup
+    .sort((a, b) => a.log.id < b.log.id ? 1 : -1); // newest logged first for dedup
 
   // Keep only the most recently logged reminder per service label
   const seenLabels = new Set<string>();

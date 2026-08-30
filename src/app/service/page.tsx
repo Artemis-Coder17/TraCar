@@ -51,8 +51,8 @@ function fmtOdo(odo?: number | null) {
 }
 
 export default function ServicePage() {
-  const { logs, addLog } = useLogs();
-  const { settings } = useVehicleSettings();
+  const { settings, vehicleId } = useVehicleSettings();
+  const { logs, addLog } = useLogs(vehicleId);
   const [yearFilter, setYearFilter] = useState('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -68,7 +68,7 @@ export default function ServicePage() {
     .sort((a, b) => {
       const da = new Date(a.date ?? '').getTime();
       const db = new Date(b.date ?? '').getTime();
-      return db !== da ? db - da : b.id - a.id;
+      return db !== da ? db - da : 0;
     });
 
   const fuelLogs = logs.filter(l => l.type === 'fuel' && l.odo != null);

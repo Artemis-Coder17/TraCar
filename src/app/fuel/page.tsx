@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { useLogs, Log, computeFuelDerived } from '../../hooks/useLogs';
+import { useVehicleSettings } from '../../hooks/useVehicleSettings';
 import { ActivityList } from '../../components/ActivityList';
 import { BottomNav } from '../../components/BottomNav';
 import { haptic } from '../../lib/haptic';
@@ -118,7 +119,8 @@ function GlassTooltip({ active, payload, label, prefix = '', suffix = '' }: {
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export default function FuelPage() {
-  const { logs, addLog } = useLogs();
+  const { vehicleId } = useVehicleSettings();
+  const { logs, addLog } = useLogs(vehicleId);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [period, setPeriod] = useState<Period>('1yr');
   const [dismissConsumption, setDismissConsumption] = useState(false);
@@ -135,7 +137,7 @@ export default function FuelPage() {
     .sort((a, b) => {
       const da = new Date(a.date ?? '').getTime();
       const db = new Date(b.date ?? '').getTime();
-      return da !== db ? da - db : a.id - b.id;
+      return da !== db ? da - db : 0;
     });
 
   const windowLogs = getWindowLogs(allFuelLogs, period);
