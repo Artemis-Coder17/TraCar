@@ -59,6 +59,11 @@ alter table logs enable row level security;
 create policy "Users manage own logs" on logs
   for all using (auth.uid() = user_id);
 
+-- ── Grants ────────────────────────────────────────────────────────────────────
+grant all on public.vehicles to authenticated;
+grant all on public.compliance_reminders to authenticated;
+grant all on public.logs to authenticated;
+
 -- ── Push Subscriptions (for FCM) ───────────────────────────────────────────────
 create table push_subscriptions (
   id uuid primary key default uuid_generate_v4(),
