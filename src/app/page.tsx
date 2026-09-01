@@ -6,6 +6,7 @@ import { useComplianceReminders, ComplianceReminder } from '../hooks/useComplian
 import { useLogs } from '../hooks/useLogs';
 import { useVehicleSettings } from '../hooks/useVehicleSettings';
 import { BottomNav } from '../components/BottomNav';
+import { PushSubscribe } from '../components/PushSubscribe';
 import { haptic } from '../lib/haptic';
 import { signOut } from '../lib/auth';
 
@@ -438,6 +439,12 @@ export default function Home() {
                   )}
                 </div>
               )}
+
+              {/* ── Notifications ─────────────────────────────────── */}
+              <div className="flex items-center justify-between pt-2">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Notifications</p>
+                <PushSubscribe />
+              </div>
 
               {/* ── About ─────────────────────────────────────────── */}
               <button

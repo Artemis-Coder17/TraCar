@@ -63,16 +63,23 @@ create policy "Users manage own logs" on logs
 grant all on public.vehicles to authenticated;
 grant all on public.compliance_reminders to authenticated;
 grant all on public.logs to authenticated;
+grant all on public.vehicles to service_role;
+grant all on public.compliance_reminders to service_role;
+grant all on public.logs to service_role;
+grant all on public.push_subscriptions to service_role;
 
--- ── Push Subscriptions (for FCM) ───────────────────────────────────────────────
+-- ── Push Subscriptions (Web Push / VAPID) ────────────────────────────────────
 create table push_subscriptions (
   id uuid primary key default uuid_generate_v4(),
   user_id uuid references auth.users(id) on delete cascade not null,
-  fcm_token text not null,
+  endpoint text not null,
+  p256dh text not null,
+  auth text not null,
   created_at timestamptz default now(),
-  unique(user_id, fcm_token)
+  unique(user_id, endpoint)
 );
 
 alter table push_subscriptions enable row level security;
 create policy "Users manage own push subscriptions" on push_subscriptions
   for all using (auth.uid() = user_id);
+grant all on public.push_subscriptions to authenticated;
