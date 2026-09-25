@@ -1,4 +1,4 @@
-# 🚗 TraCar
+# 🚗 TraCar --> https://tra-car.vercel.app/
 
 **Keep your car in check — track NCT, insurance, motor tax, service history and fuel all in one place.**
 
@@ -6,7 +6,7 @@
 
 ## 📱 What is TraCar?
 
-TraCar is a lightweight, browser-based vehicle maintenance tracker designed to help you stay on top of everything related to your car. No sign-ups, no accounts, no cloud — just a fast, private tool that lives in your browser and works like a native app.
+TraCar is a lightweight, browser-based vehicle maintenance tracker designed to help you stay on top of everything related to your car. No sign-ups, no accounts — just a fast, private tool that works like a native app. Your data is persisted in a Supabase backend, and Vercel cron jobs automatically send you notifications when your NCT, insurance or motor tax is coming up for renewal.
 
 ## ✨ Features
 
@@ -19,8 +19,9 @@ TraCar is a lightweight, browser-based vehicle maintenance tracker designed to h
 ### 📋 Compliance Reminders
 - Add NCT, Insurance and Motor Tax expiry dates
 - Color-coded status: 🟢 Good, 🟡 Warning (≤30 days), 🔴 Urgent (≤7 days)
-- "Add to Calendar" button generates ICS files for Google/Apple Calendar
+- `Add to Calendar` button generates ICS files for Google/Apple Calendar
 - Expired reminders stay visible for 30 days then auto-disappear
+- **Automated notifications** — Vercel cron jobs check expiry dates on a schedule and send you a notification when NCT, Insurance or Motor Tax is approaching
 
 ### ⛽ Fuel Logging
 - Log fuel fills with date, litres, price per litre and total cost
@@ -38,9 +39,9 @@ TraCar is a lightweight, browser-based vehicle maintenance tracker designed to h
 - Tap the car name or registration to edit anytime
 
 ### 🗑️ Data Management
-- All data stored locally in your browser via `localStorage`
+- All data stored persistently in **Supabase** (PostgreSQL)
 - "Clear All Data" with confirmation phrase to prevent accidents
-- No accounts, no servers, no tracking
+- No tracking, no analytics — your data is yours
 
 ### 🎨 Design
 - Dark glassmorphism UI with animated ambient background blobs
@@ -49,16 +50,6 @@ TraCar is a lightweight, browser-based vehicle maintenance tracker designed to h
 - Bottom navigation bar with floating action button
 - Responsive design optimised for mobile (iPhone/Android)
 - PWA-ready: add to home screen for app-like experience
-
-## 📸 Screenshots
-
-| Dashboard | Compliance | Fuel Log |
-|-----------|------------|----------|
-| 🏠 Car photo, status dots, YTD spend | 📋 NCT, Insurance, Motor Tax reminders | ⛽ Fill logging with charts |
-
-| Service | Settings |
-|---------|----------|
-| 🔧 Service history and upcoming intervals | ⚙️ Vehicle details and data management |
 
 ## 🛠️ Tech Stack
 
@@ -69,12 +60,22 @@ TraCar is a lightweight, browser-based vehicle maintenance tracker designed to h
 | Charts | [Recharts](https://recharts.org/) |
 | Toasts | [Sonner](https://sonner.emilkowal.ski/) |
 | Icons | Inline SVGs |
-| Storage | `localStorage` |
-
+| Database | [Supabase](https://supabase.com/) (PostgreSQL) |
+| Scheduled Jobs | [Vercel Cron Jobs](https://vercel.com/docs/cron-jobs) |
+| Hosting | [Vercel](https://vercel.com/) |
 
 ## 📄 Data & Privacy
 
-Everything is saved **locally in your browser**. There are no servers, no analytics, no tracking. If you clear your browser data, your TraCar data goes with it. This is by design — your car data stays yours.
+Your data is stored in a **Supabase** PostgreSQL database — giving you persistence across devices and sessions without relying on browser storage. There are no third-party analytics or tracking services. Vercel cron jobs run on a schedule and send automated notifications when your NCT, Insurance or Motor Tax is due — no manual checking required.
+
+## ⏰ Cron Jobs
+
+TraCar uses **Vercel Cron Jobs** to run scheduled background tasks that keep your compliance reminders proactive:
+
+- **Expiry notifications** — checks all stored NCT, Serice Reminders, Insurance and Motor Tax dates on a schedule and automatically sends a notification when a reminder is approaching (🟡 ≤30 days) or urgent (🔴 ≤7 days)
+- **Expired reminder cleanup** — automatically removes compliance items that have been expired for more than 30 days
+
+Notifications are triggered based on the same urgency thresholds shown in the UI, so you get alerted at the right time without having to open the app. Cron schedules are defined in `vercel.json` and run serverlessly on Vercel's infrastructure.
 
 ## 📱 Install as a Web App
 
@@ -84,8 +85,6 @@ TraCar works best when added to your home screen:
 2. Tap **Share** (iOS) or **⋮ Menu → Install** (Android/Chrome)
 3. Tap **"Add to Home Screen"**
 4. Launch from your home screen for a full-screen, app-like experience
-
-> 💡 Use the same browser each time to keep your data persistent.
 
 ## 🙌 Credits
 
